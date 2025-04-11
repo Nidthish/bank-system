@@ -1,3 +1,5 @@
+//CODE DEVELOPED BY S.NIDTHISH
+//BANK MANAGEMENT SYSTEM
 #include <stdio.h>
 #include <string.h>
 #include <conio.h>
@@ -20,7 +22,7 @@ struct user {
     char ac_type[8];
     char ac_no[11];
     int password, amount;
-    int loan_amount,loan_status,EMI;
+    int loan_amount,loan_status;
      
 };
 struct user2 {
@@ -342,7 +344,7 @@ void withdrawl(char *ac_no) {
     use1.amount -= amount;
     time(&t);
     timeInfo = localtime(&t);
-    strcpy(choice,"withdrawl");
+    strcpy(choice,"WITHDRAWAL");
 }
 else if(option==2){
     system("cls");
@@ -471,10 +473,10 @@ void transaction(char *ac_no)
 	fclose(fp);
 	printf("\n\n ENTER THE AMOUNT TO TRANSFER: ");
 	scanf("%d",&amount);
-
+    
 	if(amount>use1.amount)
 	{
-		printf("\n INSUFFICIENT BALANCE");
+        printf("\n INSUFFICIENT BALANCE");
 		login_menu(ac_no);
 	}
 	printf("\n\n ENTER YOUR 4-DIGIT PIN: ");
@@ -496,10 +498,10 @@ void transaction(char *ac_no)
     fwrite(&use2, sizeof(use2), 1, fp);
     fclose(fp);
 	
-		int i;
-		printf("\n\n YOUR TRANSACTION IS PROCESSING");
-		for(i=0;i<5;i++)
-		{
+    int i;
+    printf("\n\n YOUR TRANSACTION IS PROCESSING");
+    for(i=0;i<5;i++)
+    {
 			Sleep(500);
 			printf(".");
 			fflush(stdout);
@@ -509,12 +511,12 @@ void transaction(char *ac_no)
 		scanf("%d",&op);
 		if(op==1)
 		{
-			printf("\n\n PRINTING YOUR RECIPT");
+            printf("\n\n PRINTING YOUR RECIPT");
 			for(i=0;i<5;i++)
-		{
-			Sleep(500);
-			printf(".");
-			fflush(stdout);
+            {
+                Sleep(500);
+                printf(".");
+                fflush(stdout);
 		}
 		system("cls");
 		printf("\t\t\t\t\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 BANKING MANAGEMENT SYSTEM \xB2\xB2\xB2\xB2\xB2\xB2\xB2\n");
@@ -525,15 +527,15 @@ void transaction(char *ac_no)
         printf("\n\t\t\t\t\t\t\t    DATE: %02d-%02d-%d TIME: %02d:%02d:%02d\n",
                timeInfo->tm_mday, timeInfo->tm_mon + 1, timeInfo->tm_year + 1900,
                timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
-        printf("\n\t\t\t\t\t\t\t    AMOUNT TRANSFERRED: %d\n", amount);
-        printf("\n\t\t\t\t\t\t\t    RECEIVER ACCOUNT NUMBER: %s\n",use2.ac_no);
+               printf("\n\t\t\t\t\t\t\t    AMOUNT TRANSFERRED: %d\n", amount);
+               printf("\n\t\t\t\t\t\t\t    RECEIVER ACCOUNT NUMBER: %s\n",use2.ac_no);
         printf("\n\t\t\t\t\t\t\t    REMAINING BALANCE: %d\n", use1.amount);
         printf("\t\t\t\t\t\t\t    ===============================\n");
         printf("\t\t\t\t\t\t\t    THANK YOU FOR BANKING WITH US!\n");
         printf("\t\t\t\t\t\t\t    ===============================\n");
 		
 		}
-    strcpy(ac_no1,use1.ac_no);
+        strcpy(ac_no1,use1.ac_no);
     strcat(ac_no1,".his");
     his = fopen(ac_no1, "a");
     if (his != NULL) {
@@ -541,35 +543,35 @@ void transaction(char *ac_no)
         fprintf(his,"\n\tDATE: %02d-%02d-%d TIME: %02d:%02d:%02d\n",
                 timeInfo->tm_mday, timeInfo->tm_mon + 1, timeInfo->tm_year + 1900,
                 timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
-        fprintf(his,"\n\tRECEIVER ACCOUNT NO: %s\n",use2.ac_no);
-        fprintf(his,"\n\tAMOUNT TRANSFERED: %d\n", amount);
+                fprintf(his,"\n\tRECEIVER ACCOUNT NO: %s\n",use2.ac_no);
+                fprintf(his,"\n\tAMOUNT TRANSFERED: %d\n", amount);
         fprintf(his,"-------------------------------------------------\n");
 		fclose(his);
     } else {
         printf("\n ERROR OCCUR IN SAVING TRANSATION.....!\n");
     }
-strcat(ac_no2, ".his");
+    strcat(ac_no2, ".his");
     his = fopen(ac_no2, "a");
     if (his != NULL) {
         
         fprintf(his, "\n\tDATE: %02d-%02d-%d TIME: %02d:%02d:%02d\n",
                 timeInfo->tm_mday, timeInfo->tm_mon + 1, timeInfo->tm_year + 1900,
                 timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
-        fprintf(his,"\n\tSENDER ACCOUNT NO: %s\n",use1.ac_no);
+                fprintf(his,"\n\tSENDER ACCOUNT NO: %s\n",use1.ac_no);
         fprintf(his,"\n\tAMOUNT RECEIVED: %d\n", amount);
         fprintf(his, "-------------------------------------------------\n");
-    fclose(his);
-    } else {
+        fclose(his);
+} else {
         printf("\n ERROR OCCUR IN SAVING TRANSATION.....!\n");
     }
-printf("\n\n PRESS ANY KEY TO GO BACK");
-getch();
+    printf("\n\n PRESS ANY KEY TO GO BACK");
+    getch();
 login_menu(ac_no);
 }
 
 void transaction_history(char *ac_no)
 {
-	struct user use1;
+    struct user use1;
     FILE *fp;
     FILE *his;
     char dum_ac[11],line[256];
@@ -590,8 +592,9 @@ void transaction_history(char *ac_no)
     his = fopen(dum_ac, "r");
     if (his == NULL)
     {
-        printf("\n ACCOUNT NOT FOUND........!!\n");
-        return;
+        printf("\n transaction...!!\n");
+        Sleep(3000);
+        login_menu(ac_no);
     }
     while(fgets(line,sizeof(line),his))
     {
@@ -604,8 +607,13 @@ void transaction_history(char *ac_no)
 void loan_section(char *ac_no) {
     struct user use1;
     FILE *fp;
+    FILE *his;
+    time_t t;
+    struct tm *timeInfo;
     int option, loan;
-    
+    char dum_ac[11];
+    use1.loan_amount=0;
+    use1.loan_status=0;
     fp = fopen(ac_no, "rb");
     if (!fp) {
         printf("\n ACCOUNT NOT FOUND!\n");
@@ -625,21 +633,21 @@ void loan_section(char *ac_no) {
     scanf("%d", &option);
     
     switch (option) {
-    case 1:
-    system("cls");
-    printf("\t\t\t\t\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 BANKING MANAGEMENT SYSTEM \xB2\xB2\xB2\xB2\xB2\xB2\xB2\n");
-    printf("\n\t\t\t\t\t\t      ================ LOAN SECTION ================\n\n");
-
-    if (use1.loan_status == 1) {
-        printf("\n\n YOU ALREADY HAVE AN ACTIVE LOAN OF RS.%d", use1.loan_amount);
-        printf("\n\n PRESS ANY KEY TO GO BACK");
-        getch();
-        break;
-    }
-
-    printf("\n\nENTER LOAN AMOUNT YOU WANT: ");
+        case 1:
+        system("cls");
+        printf("\t\t\t\t\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 BANKING MANAGEMENT SYSTEM \xB2\xB2\xB2\xB2\xB2\xB2\xB2\n");
+        printf("\n\t\t\t\t\t\t      ================ LOAN SECTION ================\n\n");
+        
+        if (use1.loan_status == 1) {
+            printf("\n\n YOU ALREADY HAVE AN ACTIVE LOAN OF RS.%d", use1.loan_amount);
+            printf("\n\n PRESS ANY KEY TO GO BACK");
+            getch();
+            break;
+        }
+        
+        printf("\n\n ENTER LOAN AMOUNT YOU WANT: ");
     scanf("%d", &loan);
-
+    
     if (loan <= 0) {
         printf("\n\n INVALID LOAN AMOUNT");
         printf("\n\n PRESS ANY KEY TO GO BACK");
@@ -653,22 +661,39 @@ void loan_section(char *ac_no) {
     } else {
         float interest_rate = 5.0;
         int duration_months = 12;
-
+        
         float interest = (loan * interest_rate * duration_months) / (100 * 12);
         float total_with_interest = loan + interest;
-
+        
         use1.loan_amount = total_with_interest;
         use1.loan_status = 1;
         use1.amount += loan;
-
+        time(&t);
+        timeInfo = localtime(&t);
+        printf("\n\n=======================================");
         printf("\n\n LOAN APPROVED OF RS.%d", loan);
         printf("\n INTEREST: RS.%.2f", interest);
         printf("\n TOTAL PAYABLE: RS.%.2f", total_with_interest);
         printf("\n RS.%d CREDITED TO YOUR ACCOUNT", loan);
+        printf("\n\n=======================================");
+        strcpy(dum_ac,ac_no);
+        strcat(dum_ac,".his");
+        his=fopen(dum_ac,"a");
+        if (his != NULL) {
+            
+            fprintf(his, "\n\tDATE: %02d-%02d-%d TIME: %02d:%02d:%02d\n",
+                    timeInfo->tm_mday, timeInfo->tm_mon + 1, timeInfo->tm_year + 1900,
+                    timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
+                    fprintf(his,"\n\tLOAN AMOUNT RECEIVED: %d\n",loan);
+                    fprintf(his, "-------------------------------------------------\n");
+                    fclose(his);
+                } else {
+            printf("\n ERROR OCCUR IN SAVING TRANSATION.....!\n");
+        }
+        printf("\n\n PRESS ANY KEY TO GO BACK");
+        getch();
+        break;
     }
-    printf("\n\n PRESS ANY KEY TO GO BACK");
-    getch();
-    break;
 
     case 2:
             system("cls");
@@ -688,7 +713,7 @@ void loan_section(char *ac_no) {
             }
             break;
             
-    case 3:
+            case 3:
             system("cls");
             printf("\t\t\t\t\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 BANKING MANAGEMENT SYSTEM \xB2\xB2\xB2\xB2\xB2\xB2\xB2\n");
             printf("\n\t\t\t\t\t\t    ================ LOAN SECTION ================\n\n");
@@ -705,12 +730,28 @@ void loan_section(char *ac_no) {
                 printf("\n\n PRESS ANY KEY TO GO BACK");
                 getch();
                 break;
-
+                
             } else if (loan >= use1.loan_amount) {
                 use1.amount -= use1.loan_amount;
-                use1.loan_amount = 0;
-                use1.loan_status = 0;
                 printf("\n\n LOAN IS FULLY PAID!");
+                time(&t);
+                timeInfo = localtime(&t);
+                strcpy(dum_ac,ac_no);
+                strcat(dum_ac,".his");
+                his=fopen(dum_ac,"a");
+                if (his != NULL) {
+                    
+                    fprintf(his, "\n\tDATE: %02d-%02d-%d TIME: %02d:%02d:%02d\n",
+                        timeInfo->tm_mday, timeInfo->tm_mon + 1, timeInfo->tm_year + 1900,
+                        timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
+                        fprintf(his,"\n\tLOAN REPAYED: %d\n",use1.loan_amount);
+                        fprintf(his, "-------------------------------------------------\n");
+                        fclose(his);
+                        use1.loan_amount = 0;
+                        use1.loan_status = 0;
+                } else {
+                    printf("\n ERROR OCCUR IN SAVING TRANSATION.....!\n");
+                }
                 printf("\n\n PRESS ANY KEY TO GO BACK");
                 getch();
                 break;
@@ -719,6 +760,22 @@ void loan_section(char *ac_no) {
                 use1.amount -= loan;
                 use1.loan_amount -= loan;
                 printf("\n\n RS.%d AMOUNT ID REPAYED REMAININING LOAN RS.%d", loan, use1.loan_amount);
+                time(&t);
+                timeInfo = localtime(&t);
+                strcpy(dum_ac,ac_no);
+                strcat(dum_ac,".his");
+                his=fopen(dum_ac,"a");
+                if (his != NULL) {
+                    
+                    fprintf(his, "\n\tDATE: %02d-%02d-%d TIME: %02d:%02d:%02d\n",
+                            timeInfo->tm_mday, timeInfo->tm_mon + 1, timeInfo->tm_year + 1900,
+                            timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
+                    fprintf(his,"\n\tLOAN REPAYED: %d\n",loan);
+                    fprintf(his, "-------------------------------------------------\n");
+                fclose(his);
+                } else {
+                    printf("\n ERROR OCCUR IN SAVING TRANSATION.....!\n");
+                }
                 printf("\n\n PRESS ANY KEY TO GO BACK");
                 getch();
                 break;  
@@ -728,7 +785,7 @@ void loan_section(char *ac_no) {
         login_menu(ac_no);
         break;
 
-    default:
+        default:
             printf("\n invalid option!");
             Sleep(3000);
             loan_section(ac_no);
